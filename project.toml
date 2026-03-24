@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "forex-etl-pipeline"
+version = "1.0.0"
+requires-python = ">=3.11"
+dependencies = [
+    "pyspark==3.5.1",          # Distributed data processing
+    "delta-spark==3.1.0",      # ACID transactions on Delta Lake
+    "great-expectations==0.18.14", # Data quality checks
+    "boto3>=1.34",             # AWS SDK (S3 access)
+    "python-dotenv>=1.0",      # Read .env files
+    "requests>=2.31",          # HTTP client for Alpha Vantage API
+    "pandas>=2.0",             # DataFrame operations for API responses
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",             # Test framework
+    "pytest-cov>=5.0",         # Test coverage reports
+    "ruff>=0.4",               # Fast Python linter
+    "mypy>=1.10",              # Static type checker
+    "responses>=0.25",         # Mock HTTP requests in tests
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
